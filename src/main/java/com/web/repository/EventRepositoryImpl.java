@@ -36,7 +36,9 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
 	public Page<CafeEvent> findBySearchOption(Pageable pageable, String groupName, String eventCharactor,
 			Date startDate, Date endDate) {
 		JPQLQuery<CafeEvent> query = queryFactory.selectFrom(event)
-				.leftJoin(event.eventCharacters, eChar)
+				.leftJoin(event.eventCharacterList, eChar)
+				.leftJoin(eChar.charactor, charactor)
+				.leftJoin(charactor.group, group)
 				.where(containGroupName(groupName), containEventCharactor(eventCharactor), 
 						containStartDate(startDate), containEndDate(endDate));
 		

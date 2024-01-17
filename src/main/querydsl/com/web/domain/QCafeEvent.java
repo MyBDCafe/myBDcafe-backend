@@ -24,7 +24,7 @@ public class QCafeEvent extends EntityPathBase<CafeEvent> {
 
     public final DatePath<java.util.Date> endDate = createDate("endDate", java.util.Date.class);
 
-    public final ListPath<EventCharactor, QEventCharactor> eventCharacters = this.<EventCharactor, QEventCharactor>createList("eventCharacters", EventCharactor.class, QEventCharactor.class, PathInits.DIRECT2);
+    public final ListPath<EventCharactor, QEventCharactor> eventCharacterList = this.<EventCharactor, QEventCharactor>createList("eventCharacterList", EventCharactor.class, QEventCharactor.class, PathInits.DIRECT2);
 
     public final StringPath eventLocation = createString("eventLocation");
 

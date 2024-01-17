@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,7 +32,7 @@ public class CafeEvent {
 	private String eventName;
 	
 	@OneToMany(mappedBy = "cafeTeam")
-	List<EventCharactor> eventCharacters = new ArrayList<EventCharactor>();
+	List<EventCharactor> eventCharacterList = new ArrayList<EventCharactor>();
 	
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
