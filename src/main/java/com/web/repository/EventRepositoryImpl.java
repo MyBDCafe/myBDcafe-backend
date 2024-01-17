@@ -14,6 +14,9 @@ import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.web.domain.CafeEvent;
 import com.web.domain.QCafeEvent;
+import com.web.domain.QCharactor;
+import com.web.domain.QEventCharactor;
+import com.web.domain.QGroup;
 
 public class EventRepositoryImpl extends QuerydslRepositorySupport implements EventRepositoryCustom {
 	
@@ -25,11 +28,15 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
 	}
 	
 	QCafeEvent event = QCafeEvent.cafeEvent;
+	QEventCharactor eChar = QEventCharactor.eventCharactor;
+	QCharactor charactor = QCharactor.charactor;
+	QGroup group = QGroup.group;
 
 	@Override
 	public Page<CafeEvent> findBySearchOption(Pageable pageable, String groupName, String eventCharactor,
 			Date startDate, Date endDate) {
 		JPQLQuery<CafeEvent> query = queryFactory.selectFrom(event)
+				.leftJoin(event.eventCharacters, eChar)
 				.where(containGroupName(groupName), containEventCharactor(eventCharactor), 
 						containStartDate(startDate), containEndDate(endDate));
 		
@@ -45,14 +52,14 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
         if (eventCharactor == null || eventCharactor.isEmpty()) {
             return null;
         }
-        return event.eventCharactor.containsIgnoreCase(eventCharactor);
+        return charactor.charactorName.containsIgnoreCase(eventCharactor);
     }
 
     private BooleanExpression containGroupName(String groupName) {
         if (groupName == null || groupName.isEmpty()) {
             return null;
         }
-        return event.groupName.containsIgnoreCase(groupName);
+        return group.groupName.containsIgnoreCase(groupName);
     }
 
     private BooleanExpression containStartDate(Date startDate) {
