@@ -18,15 +18,15 @@ public class QCafeEvent extends EntityPathBase<CafeEvent> {
 
     private static final long serialVersionUID = 1295226842L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QCafeEvent cafeEvent = new QCafeEvent("cafeEvent");
+
+    public final QCharactor charactor;
 
     public final TimePath<java.util.Date> closeTime = createTime("closeTime", java.util.Date.class);
 
     public final DatePath<java.util.Date> endDate = createDate("endDate", java.util.Date.class);
-
-    public final ListPath<EventCharactor, QEventCharactor> eventCharacterList = this.<EventCharactor, QEventCharactor>createList("eventCharacterList", EventCharactor.class, QEventCharactor.class, PathInits.DIRECT2);
-
-    public final StringPath eventLocation = createString("eventLocation");
 
     public final StringPath eventName = createString("eventName");
 
@@ -41,15 +41,24 @@ public class QCafeEvent extends EntityPathBase<CafeEvent> {
     public final DatePath<java.util.Date> startDate = createDate("startDate", java.util.Date.class);
 
     public QCafeEvent(String variable) {
-        super(CafeEvent.class, forVariable(variable));
+        this(CafeEvent.class, forVariable(variable), INITS);
     }
 
     public QCafeEvent(Path<? extends CafeEvent> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QCafeEvent(PathMetadata metadata) {
-        super(CafeEvent.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QCafeEvent(PathMetadata metadata, PathInits inits) {
+        this(CafeEvent.class, metadata, inits);
+    }
+
+    public QCafeEvent(Class<? extends CafeEvent> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.charactor = inits.isInitialized("charactor") ? new QCharactor(forProperty("charactor"), inits.get("charactor")) : null;
     }
 
 }

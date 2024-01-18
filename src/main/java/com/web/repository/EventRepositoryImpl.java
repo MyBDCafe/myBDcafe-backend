@@ -15,7 +15,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.web.domain.CafeEvent;
 import com.web.domain.QCafeEvent;
 import com.web.domain.QCharactor;
-import com.web.domain.QEventCharactor;
 import com.web.domain.QGroup;
 
 public class EventRepositoryImpl extends QuerydslRepositorySupport implements EventRepositoryCustom {
@@ -28,18 +27,16 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
 	}
 	
 	QCafeEvent event = QCafeEvent.cafeEvent;
-	QEventCharactor eChar = QEventCharactor.eventCharactor;
 	QCharactor charactor = QCharactor.charactor;
 	QGroup group = QGroup.group;
 
 	@Override
-	public Page<CafeEvent> findBySearchOption(Pageable pageable, String groupName, String eventCharactor,
+	public Page<CafeEvent> findEvent(Pageable pageable, String groupName, String charactorName,
 			Date startDate, Date endDate) {
 		JPQLQuery<CafeEvent> query = queryFactory.selectFrom(event)
-				.leftJoin(event.eventCharacterList, eChar)
-				.leftJoin(eChar.charactor, charactor)
+				.leftJoin(event.charactor, charactor)
 				.leftJoin(charactor.group, group)
-				.where(containGroupName(groupName), containEventCharactor(eventCharactor), 
+				.where(containGroupName(groupName), containEventCharactor(charactorName), 
 						containStartDate(startDate), containEndDate(endDate));
 		
 		JPQLQuery<CafeEvent> appliedQuery = this.getQuerydsl().applyPagination(pageable, query);
@@ -50,11 +47,11 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
 	    return new PageImpl<CafeEvent>(cafeEvents, pageable, total);
 	}
 	
-	private BooleanExpression containEventCharactor(String eventCharactor) {
-        if (eventCharactor == null || eventCharactor.isEmpty()) {
+	private BooleanExpression containEventCharactor(String charactorName) {
+        if (charactorName == null || charactorName.isEmpty()) {
             return null;
         }
-        return charactor.charactorName.containsIgnoreCase(eventCharactor);
+        return charactor.charactorName.containsIgnoreCase(charactorName);
     }
 
     private BooleanExpression containGroupName(String groupName) {

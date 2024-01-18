@@ -16,7 +16,7 @@ public class EventService {
 	@Autowired
 	EventRepository eRepo;
 
-	Page<CafeEvent> findBySearchOption(Pageable pageable, String groupName, String eventCharactor, Date startDate, Date endDate){
-		return eRepo.findBySearchOption(pageable, groupName, eventCharactor, startDate, endDate);
+	public Page<CafeEvent> findEvent(Pageable pageable, String groupName, String charactorName, Date startDate, Date endDate){
+		return eRepo.findEvent(pageable, groupName, charactorName, startDate, endDate);
 	}
 }

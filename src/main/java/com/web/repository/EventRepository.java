@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import com.web.domain.CafeEvent;
 
 public interface EventRepository extends CrudRepository<CafeEvent, Long>, EventRepositoryCustom{
-	public List<CafeEvent> findByGroupName(String groupName);
+	
 }
