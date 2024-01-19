@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,10 +49,8 @@ public class CafeEvent {
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
-	@Temporal(TemporalType.TIME)
-	private Date openTime;
-	@Temporal(TemporalType.TIME)
-	private Date closeTime;
+	@OneToMany(mappedBy = "cafeEvent", fetch = FetchType.EAGER)
+	private List<BusinessHours> businessHours = new ArrayList<>();
 	
 	
 	private String eventUrl;

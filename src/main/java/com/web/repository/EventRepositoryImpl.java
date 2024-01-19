@@ -31,19 +31,16 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
 	QGroup group = QGroup.group;
 
 	@Override
-	public Page<CafeEvent> findEvent(Pageable pageable, String groupName, String charactorName,
-			Date startDate, Date endDate) {
+	public Page<CafeEvent> findEvent(Pageable pageable, String groupName, String charactorName, Date startDate, Date endDate) {
 		JPQLQuery<CafeEvent> query = queryFactory.selectFrom(event)
 				.leftJoin(event.charactor, charactor)
 				.leftJoin(charactor.group, group)
-				.where(containGroupName(groupName), containEventCharactor(charactorName), 
-						containStartDate(startDate), containEndDate(endDate));
+				.where(containGroupName(groupName), containEventCharactor(charactorName), betweenDate(startDate, endDate));
 		
 		JPQLQuery<CafeEvent> appliedQuery = this.getQuerydsl().applyPagination(pageable, query);
-
+		
 	    List<CafeEvent> cafeEvents = appliedQuery.fetch();
 	    long total = appliedQuery.fetchCount();
-
 	    return new PageImpl<CafeEvent>(cafeEvents, pageable, total);
 	}
 	
@@ -73,6 +70,13 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
             return null;
         }
         return event.endDate.loe(endDate); // 이벤트 종료일이 endDate 이전인 경우
+    }
+    
+    private BooleanExpression betweenDate(Date startDate, Date endDate) {
+    	if(startDate == null && endDate == null) {
+    		return null;
+    	}
+    	return null;
     }
 	
 	

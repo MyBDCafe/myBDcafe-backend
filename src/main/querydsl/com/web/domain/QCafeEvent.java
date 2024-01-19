@@ -22,9 +22,9 @@ public class QCafeEvent extends EntityPathBase<CafeEvent> {
 
     public static final QCafeEvent cafeEvent = new QCafeEvent("cafeEvent");
 
-    public final QCharactor charactor;
+    public final ListPath<BusinessHours, QBusinessHours> businessHours = this.<BusinessHours, QBusinessHours>createList("businessHours", BusinessHours.class, QBusinessHours.class, PathInits.DIRECT2);
 
-    public final TimePath<java.util.Date> closeTime = createTime("closeTime", java.util.Date.class);
+    public final QCharactor charactor;
 
     public final DatePath<java.util.Date> endDate = createDate("endDate", java.util.Date.class);
 
@@ -35,8 +35,6 @@ public class QCafeEvent extends EntityPathBase<CafeEvent> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath memo = createString("memo");
-
-    public final TimePath<java.util.Date> openTime = createTime("openTime", java.util.Date.class);
 
     public final DatePath<java.util.Date> startDate = createDate("startDate", java.util.Date.class);
 

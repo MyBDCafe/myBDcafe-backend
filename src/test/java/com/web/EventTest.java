@@ -1,5 +1,7 @@
 package com.web;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,42 +41,37 @@ public class EventTest {
 	
 	
 	@Test
-	public void test() {
+	public void test() throws ParseException {
 //		eManager.clear();
-//		Group group = new Group();
-//		group.setId(1L);
-//		group.setGroupName("PLAVE");
-//		gRepo.save(group);
+		Group group = new Group();
+		group.setId(2L);
+		group.setGroupName("데못죽");
+		gRepo.save(group);
 		
 //		System.out.println(gRepo.findByGroupName("PLAVE"));
 		
-//		Charactor charactor = new Charactor();
-//		charactor.setId(2L);
-//		charactor.setCharactorName("한노아");
-//		charactor.setGroup(group);
+		Charactor charactor = new Charactor();
+		charactor.setId(2L);
+		charactor.setCharactorName("배세진");
+		charactor.setGroup(group);
 //		cRepo.save(charactor);
 
 		
-		Calendar startDate = Calendar.getInstance();
-		Calendar endDate = Calendar.getInstance();
-		
-		startDate.set(2024, 1, 2);
-		endDate.set(2024, 1, 4);
-		
-		Date sd = startDate.getTime();
-		Date ed = endDate.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yy.MM.dd");
+		Date start = format.parse("24.02.08");
+		Date end = format.parse("24.02.10");
 //	
-//		CafeEvent event = new CafeEvent();
-//		event.setEventName("Noah`s Health Club ㅣ PLAVE 노아 생일카페");
-//		event.setCharactor(charactor);
-//		event.setStartDate(sd);
-//		event.setEndDate(ed);
-//		event.setEventUrl("https://twitter.com/noah_health0210?s=20");
-//		eRepo.save(event);
+		CafeEvent event = new CafeEvent();
+		event.setEventName("𝐓𝐡𝐞 𝐛𝐞𝐠𝐢𝐧𝐧𝐢𝐧𝐠(더 비기닝) : PLAVE 한노아 생일카페");
+		event.setCharactor(charactor);
+		event.setStartDate(start);
+		event.setEndDate(end);
+		event.setEventUrl("https://x.com/beginning0210?s=20");
+		eRepo.save(event);
 		
 		Pageable pageable = PageRequest.of(0, 10);
 		
-		Page<CafeEvent> page = eRepo.findEvent(pageable, null, null, sd, null);
+		Page<CafeEvent> page = eRepo.findEvent(pageable, null, null, start, null);
 		System.out.println(page.getContent());
 	}
 

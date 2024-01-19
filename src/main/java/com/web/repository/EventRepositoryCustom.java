@@ -9,6 +9,5 @@ import com.web.domain.CafeEvent;
 
 public interface EventRepositoryCustom {
 
-	Page<CafeEvent> findEvent(Pageable pageable, String groupName, String charactorName,
-			Date startDate, Date endDate);
+	Page<CafeEvent> findEvent(Pageable pageable, String groupName, String charactorName, Date startDate, Date endDate);
 }

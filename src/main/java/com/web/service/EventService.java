@@ -17,6 +17,7 @@ public class EventService {
 	EventRepository eRepo;
 
 	public Page<CafeEvent> findEvent(Pageable pageable, String groupName, String charactorName, Date startDate, Date endDate){
+		
 		return eRepo.findEvent(pageable, groupName, charactorName, startDate, endDate);
 	}
 }
