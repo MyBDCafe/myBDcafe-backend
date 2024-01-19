@@ -57,26 +57,12 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
         }
         return group.groupName.containsIgnoreCase(groupName);
     }
-
-    private BooleanExpression containStartDate(Date startDate) {
-        if (startDate == null) {
-            return null;
-        }
-        return event.startDate.goe(startDate); // 이벤트 시작일이 startDate 이후인 경우
-    }
-
-    private BooleanExpression containEndDate(Date endDate) {
-        if (endDate == null) {
-            return null;
-        }
-        return event.endDate.loe(endDate); // 이벤트 종료일이 endDate 이전인 경우
-    }
     
     private BooleanExpression betweenDate(Date startDate, Date endDate) {
-    	if(startDate == null && endDate == null) {
+    	if (startDate != null && endDate != null) {
     		return null;
-    	}
-    	return null;
+        }
+    	return event.startDate.between(startDate, endDate);
     }
 	
 	

@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.web.controller.eventController;
 import com.web.domain.CafeEvent;
 import com.web.domain.Charactor;
 import com.web.domain.Group;
@@ -39,6 +40,9 @@ public class EventTest {
 	@Autowired
 	CharactorRepository cRepo;
 	
+	@Autowired
+	eventController eController;
+	
 	
 	@Test
 	public void test() throws ParseException {
@@ -58,7 +62,7 @@ public class EventTest {
 
 		
 		SimpleDateFormat format = new SimpleDateFormat("yy.MM.dd");
-		Date start = format.parse("24.02.08");
+		Date start = format.parse("24.02.10");
 		Date end = format.parse("24.02.10");
 //	
 		CafeEvent event = new CafeEvent();
@@ -67,11 +71,11 @@ public class EventTest {
 		event.setStartDate(start);
 		event.setEndDate(end);
 		event.setEventUrl("https://x.com/beginning0210?s=20");
-		eRepo.save(event);
+//		eRepo.save(event);
 		
 		Pageable pageable = PageRequest.of(0, 10);
 		
-		Page<CafeEvent> page = eRepo.findEvent(pageable, null, null, start, null);
+		Page<CafeEvent> page = eController.findEvent(pageable, null, null, null, start);
 		System.out.println(page.getContent());
 	}
 

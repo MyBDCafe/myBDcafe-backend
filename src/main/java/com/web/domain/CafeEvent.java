@@ -49,8 +49,8 @@ public class CafeEvent {
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
-	@OneToMany(mappedBy = "cafeEvent", fetch = FetchType.EAGER)
-	private List<BusinessHours> businessHours = new ArrayList<>();
+//	@OneToMany(mappedBy = "cafeEvent", fetch = FetchType.EAGER)
+//	private List<BusinessHours> businessHours = new ArrayList<>();
 	
 	
 	private String eventUrl;
