@@ -1,0 +1,36 @@
+# 톰캣 서버 포트 변경
+server:
+  port: 8080
+
+
+# Web Application Type Setting: 스프링 MVC 기반으로 웹 어플리케이션 구축
+spring:
+  main:
+    web-application-type: servlet
+
+  devtools:
+    livereload:
+      enabled: true
+
+
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    properties:
+      hibernate.format_sql: true
+
+
+# Logging setting
+logging:
+  level:
+    org.hibernate: info
