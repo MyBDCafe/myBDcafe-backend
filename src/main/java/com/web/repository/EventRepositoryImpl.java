@@ -59,7 +59,7 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
     }
     
     private BooleanExpression betweenDate(Date startDate, Date endDate) {
-    	if (startDate != null && endDate != null) {
+    	if (startDate == null && endDate == null) {
     		return null;
         }
     	return event.startDate.between(startDate, endDate);
