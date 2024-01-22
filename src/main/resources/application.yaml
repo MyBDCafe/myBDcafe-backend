@@ -1,7 +1,11 @@
-# 톰캣 서버 포트 변경
+# 톰캣 서버 포트 변경 & 한글 입출력 처리
 server:
   port: 8080
-
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true 
 
 # Web Application Type Setting: 스프링 MVC 기반으로 웹 어플리케이션 구축
 spring:
