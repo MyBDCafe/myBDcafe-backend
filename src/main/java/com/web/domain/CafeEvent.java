@@ -32,7 +32,7 @@ import lombok.ToString;
 @ToString
 @SequenceGenerator(name = "CAFE_EVENT_SEQ_GENERATOR",sequenceName = "CAFE_EVENT_SEQ", allocationSize = 1)
 @Table(name = "CAFE_EVENT")
-public class CafeEvent {
+public class CafeEvent extends BaseEntity{
 	
 	@Id @Column(name="EVENT_ID")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CAFE_EVENT_SEQ_GENERATOR")
@@ -49,8 +49,8 @@ public class CafeEvent {
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
-//	@OneToMany(mappedBy = "cafeEvent", fetch = FetchType.EAGER)
-//	private List<BusinessHours> businessHours = new ArrayList<>();
+	@OneToMany(mappedBy = "cafeEvent", cascade=CascadeType.PERSIST)
+	private List<BusinessHours> businessHours = new ArrayList<>();
 	
 	
 	private String eventUrl;

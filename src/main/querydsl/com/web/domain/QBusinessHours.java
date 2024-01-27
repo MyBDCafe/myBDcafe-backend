@@ -22,15 +22,15 @@ public class QBusinessHours extends EntityPathBase<BusinessHours> {
 
     public static final QBusinessHours businessHours = new QBusinessHours("businessHours");
 
-    public final DatePath<java.util.Date> BusinessDay = createDate("BusinessDay", java.util.Date.class);
-
     public final QCafeEvent cafeEvent;
 
-    public final DatePath<java.util.Date> endDate = createDate("endDate", java.util.Date.class);
+    public final DatePath<java.util.Date> Day = createDate("Day", java.util.Date.class);
+
+    public final DatePath<java.util.Date> endTime = createDate("endTime", java.util.Date.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final DatePath<java.util.Date> startDate = createDate("startDate", java.util.Date.class);
+    public final DatePath<java.util.Date> startTime = createDate("startTime", java.util.Date.class);
 
     public QBusinessHours(String variable) {
         this(BusinessHours.class, forVariable(variable), INITS);

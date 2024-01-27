@@ -14,7 +14,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@SequenceGenerator(name = "EVENT_LOCATION_SEQ_GENERATOR",sequenceName = "EVENT_LOCATION_SEQ_GENERATOR", allocationSize = 1)
+@SequenceGenerator(name = "EVENT_LOCATION_SEQ_GENERATOR",sequenceName = "EVENT_LOCATION_SEQ", allocationSize = 1)
 @Table(name="EVENT_LOCATION")
 public class Location {
 
@@ -25,6 +25,9 @@ public class Location {
 	@OneToOne
 	@JoinColumn(name="EVENT_ID")
 	private CafeEvent cafeEvent;
+	
+	private String latitude;
+	private String longitude;
 	
 	
 	

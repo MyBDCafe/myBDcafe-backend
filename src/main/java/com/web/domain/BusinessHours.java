@@ -31,12 +31,12 @@ public class BusinessHours {
 	private CafeEvent cafeEvent;
 	
 	@Temporal(TemporalType.DATE)
-	private Date BusinessDay;
+	private Date Day;
 	
 	@Temporal(TemporalType.DATE)
-	private Date startDate;
+	private Date startTime;
 	@Temporal(TemporalType.DATE)
-	private Date endDate;
+	private Date endTime;
 	
 	
 

@@ -26,6 +26,10 @@ public class QLocation extends EntityPathBase<Location> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final StringPath latitude = createString("latitude");
+
+    public final StringPath longitude = createString("longitude");
+
     public QLocation(String variable) {
         this(Location.class, forVariable(variable), INITS);
     }
