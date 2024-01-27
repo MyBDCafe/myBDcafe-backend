@@ -49,12 +49,17 @@ public class CafeEvent extends BaseEntity{
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
-	@OneToMany(mappedBy = "cafeEvent", cascade=CascadeType.PERSIST)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "LOCATION_ID")
+	private Location location;
+	
+	@OneToMany(mappedBy = "cafeEvent", cascade=CascadeType.ALL)
 	private List<BusinessHours> businessHours = new ArrayList<>();
 	
 	
 	private String eventUrl;
 	private String memo;
+	
 	
 	
 

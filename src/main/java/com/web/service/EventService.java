@@ -3,11 +3,13 @@ package com.web.service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,11 +78,19 @@ public class EventService {
 		}else if(endDate != null && startDate == null) {
 			startDate = endDate;
 		}
-		Page<CafeEvent> event = eRepo.findEvent(pageable, groupName, charactorName, startDate, endDate);
-		EventPageDto eventPage = new EventPageDto();
-		eventPage.setContent(null);
+		Page<CafeEvent> events = eRepo.findEvent(pageable, groupName, charactorName, startDate, endDate);
 		
-		return eventPage;
+		List<EventDto> eventDto = events.stream()
+				.map(e -> new EventDto(e))
+				.collect(Collectors.toList());
+		
+		EventPageDto eventPages = new EventPageDto();
+		eventPages.setContent(eventDto);
+		eventPages.setCount(events.getTotalElements());
+		eventPages.setSize(events.getSize());
+		eventPages.setPage(events.getNumber());
+		
+		return eventPages;
 	}
 	
 }

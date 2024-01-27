@@ -42,6 +42,8 @@ public class QCafeEvent extends EntityPathBase<CafeEvent> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final QLocation location;
+
     public final StringPath memo = createString("memo");
 
     //inherited
@@ -71,6 +73,7 @@ public class QCafeEvent extends EntityPathBase<CafeEvent> {
     public QCafeEvent(Class<? extends CafeEvent> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.charactor = inits.isInitialized("charactor") ? new QCharactor(forProperty("charactor"), inits.get("charactor")) : null;
+        this.location = inits.isInitialized("location") ? new QLocation(forProperty("location"), inits.get("location")) : null;
     }
 
 }

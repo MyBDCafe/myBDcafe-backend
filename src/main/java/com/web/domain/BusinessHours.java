@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 
 @Getter
@@ -26,7 +28,7 @@ public class BusinessHours {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BUSINESS_HOURS_SEQ_GENERATOR")
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne @JsonIgnore
 	@JoinColumn(name="EVENT_ID")
 	private CafeEvent cafeEvent;
 	
