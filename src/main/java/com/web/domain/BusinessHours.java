@@ -17,8 +17,10 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @SequenceGenerator(name = "BUSINESS_HOURS_SEQ_GENERATOR",sequenceName = "BUSINESS_HOURS_SEQ", allocationSize = 1)
 @Table(name="BUSINESS_HOURS")
@@ -39,6 +41,7 @@ public class BusinessHours {
 	private Date startTime;
 	@Temporal(TemporalType.DATE)
 	private Date endTime;
+
 	
 	
 

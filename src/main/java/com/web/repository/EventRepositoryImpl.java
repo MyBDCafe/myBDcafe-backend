@@ -62,7 +62,8 @@ public class EventRepositoryImpl extends QuerydslRepositorySupport implements Ev
     	if (startDate == null && endDate == null) {
     		return null;
         }
-    	return event.startDate.between(startDate, endDate);
+    	System.out.println(event.startDate.toString());
+    	return event.startDate.between(startDate, endDate).or(event.endDate.between(startDate, endDate));
     }
 	
 	

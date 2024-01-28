@@ -27,7 +27,11 @@ public class EventDto{
 	public EventDto(CafeEvent event) {
 		eventName = event.getEventName();
 		mainCharacter = event.getCharactor().getCharactorName();
-		genre = event.getCharactor().getGroup().getGroupName();
+        if (event.getCharactor().getGroup() != null) {
+            genre = event.getCharactor().getGroup().getGroupName();
+        } else {
+            genre = null;
+        }
 		startDate = event.getStartDate();
 		endDate = event.getEndDate();
 		Location locationFromEvent = event.getLocation(); 

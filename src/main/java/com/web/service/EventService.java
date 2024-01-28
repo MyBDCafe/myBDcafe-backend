@@ -1,5 +1,9 @@
 package com.web.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -7,18 +11,20 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.web.domain.BusinessHours;
 import com.web.domain.CafeEvent;
 import com.web.domain.Charactor;
 import com.web.domain.Group;
 import com.web.domain.Location;
 import com.web.dto.EventDto;
 import com.web.dto.EventPageDto;
+import com.web.dto.HoursDto;
+import com.web.dto.LocationDto;
+import com.web.repository.BusinessHoursRepository;
 import com.web.repository.CharactorRepository;
 import com.web.repository.EventRepository;
 import com.web.repository.GroupRepository;
@@ -38,6 +44,11 @@ public class EventService {
 	
 	@Autowired
 	LocationRepository lRepo;
+	
+	@Autowired
+	BusinessHoursRepository bRepo;
+	
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	//이벤트 등록
 	public void registerEvent(EventDto eventDto) {
@@ -64,11 +75,15 @@ public class EventService {
 		}
 		
 		Location location = new Location();
-		String latitude = eventDto.getLocation().getLatitude();
-		location.setLatitude(eventDto.getLocation().getLatitude());
-		location.setLongitude(eventDto.getLocation().getLongitude());
-		if(!latitude.isEmpty()) {
-			lRepo.save(location);
+		LocationDto locationDto = eventDto.getLocation();
+		if (locationDto != null) {
+		    Optional<String> latitude = Optional.ofNullable(locationDto.getLatitude());
+		    location.setLatitude(locationDto.getLatitude());
+		    location.setLongitude(locationDto.getLongitude());
+		    
+		    if (latitude.isPresent()) {
+		        lRepo.save(location);
+		    }
 		}
 		
 		CafeEvent event = new CafeEvent();
@@ -82,21 +97,40 @@ public class EventService {
 		
 		eRepo.save(event);
 		
+		List<HoursDto> hoursDto = eventDto.getBusinessHours();
+		
+		for(HoursDto hour : hoursDto) {
+			BusinessHours businessHour = new BusinessHours();
+			businessHour.setDay(hour.getDay());
+			businessHour.setStartTime(hour.getOpenTime());
+			businessHour.setEndTime(hour.getCloseTime());
+			businessHour.setCafeEvent(event);
+			bRepo.save(businessHour);
+		}
+		
 		
 	}
 
 	//이벤트 검색
 	@Transactional
-	public EventPageDto findEvent(Pageable pageable, String groupName, String charactorName, Date startDate, Date endDate){
-		if(startDate != null && endDate == null) {
-			endDate = startDate;
-		}else if(endDate != null && startDate == null) {
-			startDate = endDate;
+	public EventPageDto findEvent(Pageable pageable, String groupName, String charactorName, String s, String e) throws ParseException{
+		
+		if(s != null && e == null) {
+			e = s;
+		}else if(e != null && s == null) {
+			s = e;
 		}
+		
+	    Date startDate = (s != null) ? dateFormat.parse(s) : null;
+	    System.out.println(startDate);
+	    Date endDate = (e != null) ? addOneDay(dateFormat.parse(e)) : null;
+	    System.out.println(endDate);
+		
+		
 		Page<CafeEvent> events = eRepo.findEvent(pageable, groupName, charactorName, startDate, endDate);
 		
 		List<EventDto> eventDto = events.stream()
-				.map(e -> new EventDto(e))
+				.map(ev -> new EventDto(ev))
 				.collect(Collectors.toList());
 		
 		EventPageDto eventPages = new EventPageDto();
@@ -106,6 +140,13 @@ public class EventService {
 		eventPages.setPage(events.getNumber());
 		
 		return eventPages;
+	}
+	
+	private Date addOneDay(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
+	    calendar.add(Calendar.DAY_OF_MONTH, 1);
+	    return calendar.getTime();
 	}
 	
 }

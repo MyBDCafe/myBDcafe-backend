@@ -5,16 +5,18 @@ import java.util.Date;
 import com.web.domain.BusinessHours;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class HoursDto{
 	private Date day;
-	private Date startTime;
-	private Date endTime;
+	private Date openTime;
+	private Date closeTime;
 	
 	public HoursDto(BusinessHours businessHour) {
 		day = businessHour.getDay();
-		startTime = businessHour.getStartTime();
-		endTime = businessHour.getEndTime();
+		openTime = businessHour.getStartTime();
+		closeTime = businessHour.getEndTime();
 	}
 }

@@ -1,5 +1,8 @@
 package com.web.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,8 +31,16 @@ public class eventController {
 	}
 	
 	@GetMapping("search")
-	public EventPageDto findEvent(Pageable pageable, String g, String c, Date s, Date e){
+	public EventPageDto findEvent(Pageable pageable, String g, String c, String s, String e) throws ParseException{
+		
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+
+
 		return eService.findEvent(pageable, g, c, s, e);
 	}
+	
 
 }
+
+
