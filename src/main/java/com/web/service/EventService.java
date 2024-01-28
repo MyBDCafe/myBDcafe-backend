@@ -16,11 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.web.domain.CafeEvent;
 import com.web.domain.Charactor;
 import com.web.domain.Group;
+import com.web.domain.Location;
 import com.web.dto.EventDto;
 import com.web.dto.EventPageDto;
 import com.web.repository.CharactorRepository;
 import com.web.repository.EventRepository;
 import com.web.repository.GroupRepository;
+import com.web.repository.LocationRepository;
 
 @Service
 public class EventService {
@@ -33,6 +35,9 @@ public class EventService {
 	
 	@Autowired
 	CharactorRepository cRepo;
+	
+	@Autowired
+	LocationRepository lRepo;
 	
 	//이벤트 등록
 	public void registerEvent(EventDto eventDto) {
@@ -58,11 +63,20 @@ public class EventService {
 			cRepo.save(charactor);
 		}
 		
+		Location location = new Location();
+		String latitude = eventDto.getLocation().getLatitude();
+		location.setLatitude(eventDto.getLocation().getLatitude());
+		location.setLongitude(eventDto.getLocation().getLongitude());
+		if(!latitude.isEmpty()) {
+			lRepo.save(location);
+		}
+		
 		CafeEvent event = new CafeEvent();
 		event.setEventName(eventDto.getEventName());
 		event.setCharactor(charactor);
 		event.setStartDate(eventDto.getStartDate());
 		event.setEndDate(eventDto.getEndDate());
+		event.setLocation(location);
 		event.setEventUrl(eventDto.getEventUrl());
 		event.setMemo(eventDto.getMemo());
 		
@@ -71,6 +85,7 @@ public class EventService {
 		
 	}
 
+	//이벤트 검색
 	@Transactional
 	public EventPageDto findEvent(Pageable pageable, String groupName, String charactorName, Date startDate, Date endDate){
 		if(startDate != null && endDate == null) {

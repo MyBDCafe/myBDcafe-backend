@@ -44,27 +44,3 @@ public class EventDto{
 	}
 	
 }
-
-@Data
-class HoursDto{
-	private Date day;
-	private Date startTime;
-	private Date endTime;
-	
-	public HoursDto(BusinessHours businessHour) {
-		day = businessHour.getDay();
-		startTime = businessHour.getStartTime();
-		endTime = businessHour.getEndTime();
-	}
-}
-
-@Data
-class LocationDto{
-	private String latitude;
-	private String longitude; 
-	
-	public LocationDto(Location locationFromEvent) {
-		latitude = locationFromEvent.getLatitude();
-		longitude = locationFromEvent.getLongitude();
-	}
-}

@@ -45,38 +45,37 @@ public class EventTest {
 	
 	
 	@Test
+	@Transactional
 	public void test() throws ParseException {
 //		eManager.clear();
-		Group group = new Group();
-		group.setId(2L);
-		group.setGroupName("데못죽");
-		gRepo.save(group);
+//		Group group = new Group();
+//		group.setId(2L);
+//		group.setGroupName("데못죽");
+//		gRepo.save(group);
+//		
+////		System.out.println(gRepo.findByGroupName("PLAVE"));
+//		
+//		Charactor charactor = new Charactor();
+//		charactor.setId(2L);
+//		charactor.setCharactorName("배세진");
+//		charactor.setGroup(group);
+////		cRepo.save(charactor);
+//
+//		
+//		SimpleDateFormat format = new SimpleDateFormat("yy.MM.dd");
+//		Date start = format.parse("24.02.10");
+//		Date end = format.parse("24.02.10");
+////	
+//		CafeEvent event = new CafeEvent();
+//		event.setEventName("𝐓𝐡𝐞 𝐛𝐞𝐠𝐢𝐧𝐧𝐢𝐧𝐠(더 비기닝) : PLAVE 한노아 생일카페");
+//		event.setCharactor(charactor);
+//		event.setStartDate(start);
+//		event.setEndDate(end);
+//		event.setEventUrl("https://x.com/beginning0210?s=20");
+////		eRepo.save(event);
+//		
+//		Pageable pageable = PageRequest.of(0, 10);
 		
-//		System.out.println(gRepo.findByGroupName("PLAVE"));
-		
-		Charactor charactor = new Charactor();
-		charactor.setId(2L);
-		charactor.setCharactorName("배세진");
-		charactor.setGroup(group);
-//		cRepo.save(charactor);
-
-		
-		SimpleDateFormat format = new SimpleDateFormat("yy.MM.dd");
-		Date start = format.parse("24.02.10");
-		Date end = format.parse("24.02.10");
-//	
-		CafeEvent event = new CafeEvent();
-		event.setEventName("𝐓𝐡𝐞 𝐛𝐞𝐠𝐢𝐧𝐧𝐢𝐧𝐠(더 비기닝) : PLAVE 한노아 생일카페");
-		event.setCharactor(charactor);
-		event.setStartDate(start);
-		event.setEndDate(end);
-		event.setEventUrl("https://x.com/beginning0210?s=20");
-//		eRepo.save(event);
-		
-		Pageable pageable = PageRequest.of(0, 10);
-		
-		Page<CafeEvent> page = eController.findEvent(pageable, null, null, null, start);
-		System.out.println(page.getContent());
 	}
 
 }

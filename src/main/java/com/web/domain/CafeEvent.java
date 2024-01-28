@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.web.dto.LocationDto;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,8 +60,7 @@ public class CafeEvent extends BaseEntity{
 	
 	
 	private String eventUrl;
-	private String memo;
-	
+	private String memo;	
 	
 	
 

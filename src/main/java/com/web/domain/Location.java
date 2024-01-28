@@ -14,8 +14,10 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @SequenceGenerator(name = "EVENT_LOCATION_SEQ_GENERATOR",sequenceName = "EVENT_LOCATION_SEQ", allocationSize = 1)
 @Table(name="EVENT_LOCATION")
