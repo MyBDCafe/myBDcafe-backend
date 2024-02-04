@@ -69,12 +69,13 @@ public class EventTest {
 //		CafeEvent event = new CafeEvent();
 //		event.setEventName("𝐓𝐡𝐞 𝐛𝐞𝐠𝐢𝐧𝐧𝐢𝐧𝐠(더 비기닝) : PLAVE 한노아 생일카페");
 //		event.setCharactor(charactor);
-//		event.setStartDate(start);
+//		eRvent.setStartDate(start);
 //		event.setEndDate(end);
 //		event.setEventUrl("https://x.com/beginning0210?s=20");
 ////		eRepo.save(event);
 //		
-//		Pageable pageable = PageRequest.of(0, 10);
+		Pageable pageable = PageRequest.of(0, 10);
+		System.out.println(eController.findEvent(pageable, "테스트", null, null, null));
 		
 	}
 

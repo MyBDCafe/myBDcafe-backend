@@ -25,18 +25,15 @@ public class eventController {
 	@Autowired
 	EventService eService;
 	
+	//등록
 	@PostMapping("events")
 	public void registerEvent(@RequestBody @Validated EventDto eventDto) {
 		eService.registerEvent(eventDto);
 	}
 	
+	//검색
 	@GetMapping("search")
 	public EventPageDto findEvent(Pageable pageable, String g, String c, String s, String e) throws ParseException{
-		
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
-
-
 		return eService.findEvent(pageable, g, c, s, e);
 	}
 	
