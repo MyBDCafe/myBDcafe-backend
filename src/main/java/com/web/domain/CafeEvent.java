@@ -40,6 +40,7 @@ public class CafeEvent extends BaseEntity{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CAFE_EVENT_SEQ_GENERATOR")
 	private Long id;
 	
+	@Column(nullable = false)
 	private String eventName;
 	
 	@ManyToOne
