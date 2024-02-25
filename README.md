@@ -16,5 +16,12 @@
 <br>
 
 ## :lollipop:주요 기능
+- 이벤트 카페 정보를 저장해 캘린더+지도로 표시
+- 아이돌 그룹(장르명) or 캐릭터명 or 기간으로 검색
+- 공유 URL을 통해 다른 유저가 등록한 정보 가져오기
 
-  
+## API 명세서
+- 검색 api: 
+https://github.com/orgs/MyBDCafe/projects/1?pane=issue&itemId=50601015
+- 등록 api:
+https://github.com/orgs/MyBDCafe/projects/1?pane=issue&itemId=51373067
