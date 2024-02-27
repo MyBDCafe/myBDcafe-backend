@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,6 +50,9 @@ public class EventService {
 	BusinessHoursRepository bRepo;
 	
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	
+	@Autowired
+	private StringEncryptor encryptor;
 	
 	//이벤트 등록
 	public void registerEvent(EventDto eventDto) {
@@ -147,6 +151,28 @@ public class EventService {
 	    calendar.setTime(date);
 	    calendar.add(Calendar.DAY_OF_MONTH, 1);
 	    return calendar.getTime();
+	}
+	
+	
+	//이벤트 공유 URL
+	public String createURL(Long id) {
+		System.out.println(id);
+		String encrptId = encryptor.encrypt(String.valueOf(id)).replaceAll("/", "_");
+		String url = "http://localhost:8080/shareEvent/"+encrptId;
+		return url;
+	}
+
+	public EventDto getEvent(String encryptedId) {
+		String decryptedId = encryptor.decrypt(encryptedId.replaceAll("_", "/"));
+        Long eventId = Long.parseLong(decryptedId);
+        
+        Optional<CafeEvent> eventOptional = eRepo.findById(eventId);
+        if (eventOptional.isPresent()) {
+            CafeEvent event = eventOptional.get();
+            return new EventDto(event);
+        } else {
+            return null;
+        }
 	}
 	
 }
