@@ -137,3 +137,55 @@ http://13.209.154.40:8080/search?c=테스트
 }
 ```
 
+<br> <br>
+
+### 공유 URL만들기
+
+```
+POST /createURL
+HOST 13.209.154.40:8080
+```
+
+
+#### 입력 값
+|필드명|이름|타입|null 가능여부|
+|------|---|---|---|
+|id|이벤트ID|Long|x|
+
+
+```
+{
+   "id":14
+}
+```
+
+
+#### 리턴값
+```
+http://localhost:8080/shareEvent/_QHZeRSRp6qUkjE86wDtdcTJTrTsiBk4
+```
+
+<br><br>
+
+### URL로 이벤트카페 정보 불러오기
+
+*이벤트 등록 페이지로 불러오기
+
+```
+GET /shareEvent/{encryptedId}
+HOST 13.209.154.40:8080
+```
+
+```
+{
+    "eventName": "purple Line : 플레이브 한노아 생일 칵테일바",
+    "mainCharacter": "한노아",
+    "genre": "PLAVE",
+    "startDate": "2024-02-02",
+    "endDate": "2024-02-04",
+    "location": null,
+    "businessHours": [],
+    "eventUrl": "https://x.com/pub_purpleline?s=20",
+    "memo": null
+}
+```
