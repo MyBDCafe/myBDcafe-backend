@@ -139,7 +139,7 @@ http://13.209.154.40:8080/search?c=테스트
 
 <br> <br>
 
-### 공유 URL만들기
+## 공유 URL만들기
 
 ```
 POST /createURL
