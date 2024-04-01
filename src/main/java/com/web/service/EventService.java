@@ -189,6 +189,7 @@ public class EventService {
         }
 	}
 
+	//이벤트 수정
 	public void updateEvent(EventDto eventDto) {
 		
 		Charactor charactor = findCharactor(eventDto.getGenre(), eventDto.getMainCharacter());
@@ -207,8 +208,10 @@ public class EventService {
 		
 		eRepo.save(event);
 	}
-
+	
+	//이벤트 삭제
 	public void deleteEvent(Long id) {
+		eRepo.deleteById(id);
 	}
 	
 }
