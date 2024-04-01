@@ -1,6 +1,6 @@
 ## 등록 api
 ```
-POST /events
+POST /event/create
 HOST 13.209.154.40:8080
 ```
 
@@ -57,7 +57,7 @@ HOST 13.209.154.40:8080
 ## 검색 api
 
 ```
-GET /search
+GET /event/search
 HOST [13.209.154.40:8080]
 ```
 
@@ -138,6 +138,31 @@ http://13.209.154.40:8080/search?c=테스트
 ```
 
 <br> <br>
+
+## 수정 api
+
+```
+PATCH /event/update
+HOST 13.209.154.40:8080
+```
+
+
+등록 api와 동일
+
+<br> <br>
+
+
+## 삭제 api
+
+```
+DELETE /event/delete/{eventId}
+HOST 13.209.154.40:8080
+```
+
+이벤트 id를 통해 삭제
+
+<br> <br>
+
 
 ## 공유 URL만들기
 

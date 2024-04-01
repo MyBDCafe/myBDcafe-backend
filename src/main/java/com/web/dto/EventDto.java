@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class EventDto{
+	private Long eventId;
 	private String eventName;
 	private String mainCharacter;
 	private String genre;
@@ -25,6 +26,7 @@ public class EventDto{
 	private String memo;
 	
 	public EventDto(CafeEvent event) {
+		eventId = event.getId();
 		eventName = event.getEventName();
 		mainCharacter = event.getCharactor().getCharactorName();
         if (event.getCharactor().getGroup() != null) {

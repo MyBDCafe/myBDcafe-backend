@@ -22,16 +22,18 @@ import javax.persistence.TemporalType;
 
 import com.web.dto.LocationDto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
+@Builder
 @Entity
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 @SequenceGenerator(name = "CAFE_EVENT_SEQ_GENERATOR",sequenceName = "CAFE_EVENT_SEQ", allocationSize = 1)
 @Table(name = "CAFE_EVENT")
 public class CafeEvent extends BaseEntity{

@@ -54,32 +54,36 @@ public class EventService {
 	@Autowired
 	private StringEncryptor encryptor;
 	
-	//이벤트 등록
-	public void registerEvent(EventDto eventDto) {
-		
-		List<Group> existingGroup = gRepo.findByGroupName(eventDto.getGenre());
+	public Charactor findCharactor(String genre, String mainCharacter) {
+		List<Group> existingGroup = gRepo.findByGroupName(genre);
 		Group group = new Group();
 		System.out.println(existingGroup);
 		if(!existingGroup.isEmpty()) {
 			group.setId(existingGroup.get(0).getId());
 		}else {
-			group.setGroupName(eventDto.getGenre());
+			group.setGroupName(genre);
 			gRepo.save(group);
 		}
 		
-		Optional<Charactor> existingCharactor = Optional.ofNullable(cRepo.findByCharactorName(eventDto.getMainCharacter()));
+		Optional<Charactor> existingCharactor = Optional.ofNullable(cRepo.findByCharactorName(mainCharacter));
 		Charactor charactor = new Charactor();
 		if(existingCharactor.isPresent()) {
 			charactor.setId(existingCharactor.get().getId());
 			charactor.setCharactorName(existingCharactor.get().getCharactorName());
 		}else {
-			charactor.setCharactorName(eventDto.getMainCharacter());
+			charactor.setCharactorName(mainCharacter);
 			charactor.setGroup(group);
 			cRepo.save(charactor);
 		}
 		
+		
+		
+		return charactor;
+	}
+	
+	public Location findLocation(LocationDto loDto) {
 		Location location = new Location();
-		LocationDto locationDto = eventDto.getLocation();
+		LocationDto locationDto = loDto;
 		if (locationDto != null) {
 		    Optional<String> latitude = Optional.ofNullable(locationDto.getLatitude());
 		    location.setLatitude(locationDto.getLatitude());
@@ -89,15 +93,25 @@ public class EventService {
 		        lRepo.save(location);
 		    }
 		}
+		return location;
 		
-		CafeEvent event = new CafeEvent();
-		event.setEventName(eventDto.getEventName());
-		event.setCharactor(charactor);
-		event.setStartDate(eventDto.getStartDate());
-		event.setEndDate(eventDto.getEndDate());
-		event.setLocation(location);
-		event.setEventUrl(eventDto.getEventUrl());
-		event.setMemo(eventDto.getMemo());
+	}
+	
+	//이벤트 등록
+	public void registerEvent(EventDto eventDto) {
+		
+		Charactor charactor = findCharactor(eventDto.getGenre(), eventDto.getMainCharacter());
+		Location location = findLocation(eventDto.getLocation());
+		
+		CafeEvent event = CafeEvent.builder()
+				.eventName(eventDto.getEventName())
+				.charactor(charactor)
+				.startDate(eventDto.getStartDate())
+				.endDate(eventDto.getEndDate())
+				.location(location)
+				.eventUrl(eventDto.getEventUrl())
+				.memo(eventDto.getMemo())
+				.build();
 		
 		eRepo.save(event);
 		
@@ -173,6 +187,28 @@ public class EventService {
         } else {
             return null;
         }
+	}
+
+	public void updateEvent(EventDto eventDto) {
+		
+		Charactor charactor = findCharactor(eventDto.getGenre(), eventDto.getMainCharacter());
+		Location location = findLocation(eventDto.getLocation());
+		
+		CafeEvent event = CafeEvent.builder()
+				.id(eventDto.getEventId())
+				.eventName(eventDto.getEventName())
+				.charactor(charactor)
+				.startDate(eventDto.getStartDate())
+				.endDate(eventDto.getEndDate())
+				.location(location)
+				.eventUrl(eventDto.getEventUrl())
+				.memo(eventDto.getMemo())
+				.build();
+		
+		eRepo.save(event);
+	}
+
+	public void deleteEvent(Long id) {
 	}
 	
 }
