@@ -1,33 +1,37 @@
 package com.web.domain;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@SequenceGenerator(name = "BUSINESS_HOURS_SEQ_GENERATOR",sequenceName = "BUSINESS_HOURS_SEQ", allocationSize = 1)
 @Table(name="BUSINESS_HOURS")
 public class BusinessHours {
 	
 	@Id @Column(name="BUSINESS_HOURS_ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BUSINESS_HOURS_SEQ_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne @JsonIgnore
@@ -37,10 +41,10 @@ public class BusinessHours {
 	@Temporal(TemporalType.DATE)
 	private Date Day;
 	
-	@Temporal(TemporalType.DATE)
-	private Date startTime;
-	@Temporal(TemporalType.DATE)
-	private Date endTime;
+	@Temporal(TemporalType.TIME)
+	private LocalTime openTime;
+	@Temporal(TemporalType.TIME)
+	private LocalTime closeTime;
 
 	
 	

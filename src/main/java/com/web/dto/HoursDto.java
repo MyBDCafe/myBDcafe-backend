@@ -1,5 +1,7 @@
 package com.web.dto;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 import com.web.domain.BusinessHours;
@@ -11,12 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HoursDto{
 	private Date day;
-	private Date openTime;
-	private Date closeTime;
+	private LocalTime openTime;
+	private LocalTime closeTime;
 	
 	public HoursDto(BusinessHours businessHour) {
 		day = businessHour.getDay();
-		openTime = businessHour.getStartTime();
-		closeTime = businessHour.getEndTime();
+		openTime = businessHour.getOpenTime();
+		closeTime = businessHour.getCloseTime();
 	}
 }

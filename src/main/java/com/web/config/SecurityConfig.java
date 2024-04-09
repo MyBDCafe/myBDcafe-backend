@@ -28,9 +28,9 @@ public class SecurityConfig {
 				.headers().frameOptions().disable()
 				.and()
 				.authorizeHttpRequests()
-				.antMatchers("/", "/login").permitAll()
-				.antMatchers("/admin").hasRole("ADMIN")
-				.antMatchers("/my/**").hasAnyRole("ADMIN", "USER")
+				.requestMatchers("/", "/login").permitAll()
+				.requestMatchers("/admin").hasRole("ADMIN")
+				.requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
 				.anyRequest().permitAll()
                 ;
 

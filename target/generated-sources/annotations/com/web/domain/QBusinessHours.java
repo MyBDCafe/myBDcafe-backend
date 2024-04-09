@@ -24,13 +24,13 @@ public class QBusinessHours extends EntityPathBase<BusinessHours> {
 
     public final QCafeEvent cafeEvent;
 
-    public final DatePath<java.util.Date> Day = createDate("Day", java.util.Date.class);
+    public final TimePath<java.time.LocalTime> closeTime = createTime("closeTime", java.time.LocalTime.class);
 
-    public final DatePath<java.util.Date> endTime = createDate("endTime", java.util.Date.class);
+    public final DatePath<java.util.Date> Day = createDate("Day", java.util.Date.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final DatePath<java.util.Date> startTime = createDate("startTime", java.util.Date.class);
+    public final TimePath<java.time.LocalTime> openTime = createTime("openTime", java.time.LocalTime.class);
 
     public QBusinessHours(String variable) {
         this(BusinessHours.class, forVariable(variable), INITS);

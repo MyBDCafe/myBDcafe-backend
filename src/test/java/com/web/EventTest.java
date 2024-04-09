@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.EntityManager;
 
 import org.assertj.core.util.DateUtil;
 import org.junit.jupiter.api.Test;
@@ -24,6 +23,8 @@ import com.web.domain.Group;
 import com.web.repository.CharactorRepository;
 import com.web.repository.EventRepository;
 import com.web.repository.GroupRepository;
+
+import jakarta.persistence.EntityManager;
 
 @SpringBootTest
 public class EventTest {

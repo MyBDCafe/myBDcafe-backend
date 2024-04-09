@@ -56,23 +56,29 @@ public class EventService {
 	
 	public Charactor findCharactor(String genre, String mainCharacter) {
 		List<Group> existingGroup = gRepo.findByGroupName(genre);
-		Group group = new Group();
+		Group group;
+		
 		System.out.println(existingGroup);
 		if(!existingGroup.isEmpty()) {
-			group.setId(existingGroup.get(0).getId());
+			group = existingGroup.get(0);
 		}else {
-			group.setGroupName(genre);
+			group = Group.builder()
+					.groupName(genre)
+					.build();
 			gRepo.save(group);
 		}
 		
 		Optional<Charactor> existingCharactor = Optional.ofNullable(cRepo.findByCharactorName(mainCharacter));
-		Charactor charactor = new Charactor();
+		
+		Charactor charactor;
 		if(existingCharactor.isPresent()) {
-			charactor.setId(existingCharactor.get().getId());
-			charactor.setCharactorName(existingCharactor.get().getCharactorName());
+			charactor = existingCharactor.get();
 		}else {
-			charactor.setCharactorName(mainCharacter);
-			charactor.setGroup(group);
+			charactor = Charactor.builder()
+                    .charactorName(mainCharacter)
+                    .group(group)
+                    .build();
+			
 			cRepo.save(charactor);
 		}
 		
@@ -82,26 +88,35 @@ public class EventService {
 	}
 	
 	public Location findLocation(LocationDto loDto) {
-		Location location = new Location();
-		LocationDto locationDto = loDto;
-		if (locationDto != null) {
-		    Optional<String> latitude = Optional.ofNullable(locationDto.getLatitude());
-		    location.setLatitude(locationDto.getLatitude());
-		    location.setLongitude(locationDto.getLongitude());
-		    
-		    if (latitude.isPresent()) {
-		        lRepo.save(location);
-		    }
+		
+		if(loDto == null) {
+			return null;
 		}
-		return location;
+		
+		Optional<String> latitude = Optional.ofNullable(loDto.getLatitude());
+	    
+	    if (!latitude.isPresent()) {
+	        return null;
+	    }
+
+	    Location location = Location.builder()
+	                                .latitude(loDto.getLatitude())
+	                                .longitude(loDto.getLongitude())
+	                                .build();
+	    lRepo.save(location);
+	    
+	    return location;
 		
 	}
 	
 	//이벤트 등록
+	@Transactional
 	public void registerEvent(EventDto eventDto) {
 		
 		Charactor charactor = findCharactor(eventDto.getGenre(), eventDto.getMainCharacter());
 		Location location = findLocation(eventDto.getLocation());
+		
+		List<HoursDto> hoursDto = eventDto.getBusinessHours();
 		
 		CafeEvent event = CafeEvent.builder()
 				.eventName(eventDto.getEventName())
@@ -115,16 +130,16 @@ public class EventService {
 		
 		eRepo.save(event);
 		
-		List<HoursDto> hoursDto = eventDto.getBusinessHours();
-		
 		for(HoursDto hour : hoursDto) {
-			BusinessHours businessHour = new BusinessHours();
-			businessHour.setDay(hour.getDay());
-			businessHour.setStartTime(hour.getOpenTime());
-			businessHour.setEndTime(hour.getCloseTime());
-			businessHour.setCafeEvent(event);
+			BusinessHours businessHour = BusinessHours.builder()
+					.cafeEvent(event)
+					.Day(hour.getDay())
+					.openTime(hour.getOpenTime())
+					.closeTime(hour.getCloseTime())
+					.build();
 			bRepo.save(businessHour);
 		}
+		
 		
 		
 	}

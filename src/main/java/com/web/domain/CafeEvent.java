@@ -4,42 +4,37 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
-import com.web.dto.LocationDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@SequenceGenerator(name = "CAFE_EVENT_SEQ_GENERATOR",sequenceName = "CAFE_EVENT_SEQ", allocationSize = 1)
 @Table(name = "CAFE_EVENT")
 public class CafeEvent extends BaseEntity{
 	
 	@Id @Column(name="EVENT_ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CAFE_EVENT_SEQ_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(nullable = false)
@@ -54,11 +49,11 @@ public class CafeEvent extends BaseEntity{
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "LOCATION_ID")
 	private Location location;
 	
-	@OneToMany(mappedBy = "cafeEvent", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "cafeEvent", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<BusinessHours> businessHours = new ArrayList<>();
 	
 	

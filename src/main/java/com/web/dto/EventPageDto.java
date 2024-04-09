@@ -1,9 +1,6 @@
 package com.web.dto;
 
 import java.util.List;
-
-import com.web.domain.CafeEvent;
-
 import lombok.Data;
 
 @Data

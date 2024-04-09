@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.web.domain.BusinessHours;
 import com.web.domain.CafeEvent;
 import com.web.domain.Location;
 
