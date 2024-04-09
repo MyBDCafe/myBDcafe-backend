@@ -11,8 +11,8 @@
 - Spring Data JPA
 - QueryDSL
 - Spring Security
-- Oracle -> MySQL(변경 예정)
-- AWS(Light sail)
+- 변경 예정
+- AWS EC2, RDS
 <br>
 
 ## :lollipop:주요 기능
