@@ -55,6 +55,10 @@ public class eventController {
 	
 	@PostMapping("createURL")
 	public String createURL(@RequestBody Map<String, Long> data) {
+		if(data.isEmpty()) {
+			throw new NullPointerException("id 없음");
+		}
+		
 		Long id = data.get("id");
 		return eService.createURL(id);
 	}
