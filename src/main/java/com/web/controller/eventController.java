@@ -42,35 +42,16 @@ public class eventController {
 		return eService.findEvent(pageable, g, c, s, e);
 	}
 	
+	//수정
 	@PatchMapping("event/update")
 	public void updateEvent(@RequestBody EventDto eventDto) {
 		eService.updateEvent(eventDto);
 	}
 	
+	//삭제
 	@DeleteMapping("event/delete/{eventId}")
 	public void deleteEvent(@PathVariable("eventId") Long id) {
 		eService.deleteEvent(id);
-	}
-	
-	
-	@PostMapping("createURL")
-	public String createURL(@RequestBody Map<String, Long> data) {
-		if(data.isEmpty()) {
-			throw new NullPointerException("id 없음");
-		}
-		
-		Long id = data.get("id");
-		return eService.createURL(id);
-	}
-	
-	@GetMapping("shareEvent/{encryptedId}")
-	public ResponseEntity<EventDto> getEvent(@PathVariable("encryptedId") String encryptedId) {
-		EventDto event = eService.getEvent(encryptedId);
-	    if (event != null) {
-	        return ResponseEntity.ok(event);
-	    } else {
-	        return ResponseEntity.notFound().build();
-	    }
 	}
 
 }
