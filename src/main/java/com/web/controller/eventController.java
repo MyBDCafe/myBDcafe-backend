@@ -32,7 +32,7 @@ public class eventController {
 	
 	//등록
 	@PostMapping("event/create")
-	public void registerEvent(@RequestBody @Validated EventDto eventDto) {
+	public void registerEvent(@Validated @RequestBody EventDto eventDto) {
 		eService.registerEvent(eventDto);
 	}
 	
@@ -44,7 +44,7 @@ public class eventController {
 	
 	//수정
 	@PatchMapping("event/update")
-	public void updateEvent(@RequestBody EventDto eventDto) {
+	public void updateEvent(@Validated @RequestBody EventDto eventDto) {
 		eService.updateEvent(eventDto);
 	}
 	

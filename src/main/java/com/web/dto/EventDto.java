@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.web.domain.CafeEvent;
 import com.web.domain.Location;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EventDto{
 	private Long eventId;
+	
+	@NotBlank
 	private String eventName;
+	
 	private String mainCharacter;
 	private String genre;
 	private Date startDate;
