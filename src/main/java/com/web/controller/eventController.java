@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.web.dto.EventDto;
 import com.web.dto.EventPageDto;
+import com.web.dto.UpdateEventDto;
 import com.web.service.EventService;
 
 @RestController
@@ -42,9 +43,14 @@ public class eventController {
 		return eService.findEvent(pageable, g, c, s, e);
 	}
 	
+	@GetMapping("getevent/{eventId}")
+	public UpdateEventDto findEventFromId(@PathVariable("eventId") Long id) {
+		return eService.findEventFromId(id);
+	}
+	
 	//수정
 	@PatchMapping("event/update")
-	public void updateEvent(@Validated @RequestBody EventDto eventDto) {
+	public void updateEvent(@Validated @RequestBody UpdateEventDto eventDto) {
 		eService.updateEvent(eventDto);
 	}
 	

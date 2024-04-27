@@ -6,4 +6,6 @@ import com.web.domain.Location;
 
 public interface LocationRepository extends CrudRepository<Location, Long>{
 
+	void deleteByCafeEventId(Long id);
+
 }

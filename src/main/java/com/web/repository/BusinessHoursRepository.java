@@ -6,4 +6,6 @@ import com.web.domain.BusinessHours;
 
 public interface BusinessHoursRepository extends CrudRepository<BusinessHours, Long> {
 
+	void deleteByCafeEventId(Long eventId);
+
 }
