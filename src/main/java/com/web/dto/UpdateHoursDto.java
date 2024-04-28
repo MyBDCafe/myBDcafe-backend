@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UpdateHoursDto {
-	private Long id;
+	private Long hourId;
 	private Date day;
 	private LocalTime openTime;
 	private LocalTime closeTime;
 	
 	public UpdateHoursDto(BusinessHours businessHour) {
-		id = businessHour.getId();
+		hourId = businessHour.getId();
 		day = businessHour.getDay();
 		openTime = businessHour.getOpenTime();
 		closeTime = businessHour.getCloseTime();
