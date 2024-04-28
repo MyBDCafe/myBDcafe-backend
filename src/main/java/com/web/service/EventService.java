@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,9 @@ public class EventService {
 	
 	@Autowired
 	BusinessHoursRepository bRepo;
+	
+	@Autowired
+	MessageSource ms;
 	
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -201,7 +207,7 @@ public class EventService {
 			    }
 
 			    Location location = Location.builder()
-			    							.id(loDto.getId())
+			    							.id(loDto.getLocationId())
 			                                .latitude(loDto.getLatitude())
 			                                .longitude(loDto.getLongitude())
 			                                .build();
@@ -234,7 +240,7 @@ public class EventService {
 		for(UpdateHoursDto hour : hoursDto) {
 			BusinessHours businessHour = BusinessHours.builder()
 					.cafeEvent(event)
-					.id(hour.getId())
+					.id(hour.getHourId())
 					.Day(hour.getDay())
 					.openTime(hour.getOpenTime())
 					.closeTime(hour.getCloseTime())
@@ -245,8 +251,13 @@ public class EventService {
 	
 	//이벤트 삭제
 	public void deleteEvent(Long id) {
-		eRepo.deleteById(id);
-		lRepo.deleteByCafeEventId(id);
+		if(eRepo.existsById(id)) {
+			eRepo.deleteById(id);
+			lRepo.deleteByCafeEventId(id);			
+		}else {
+			throw new RuntimeErrorException(null, ms.getMessage("event.id.not.found", null, null));
+		}
+		
 	}
 	
 }
