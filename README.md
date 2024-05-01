@@ -6,12 +6,12 @@
 <br>
 
 ## :wrench:기술 스택
-- java11
+- java17
 - SpringBoot
 - Spring Data JPA
 - QueryDSL
 - Spring Security
-- 변경 예정
+- MySQL
 - AWS EC2, RDS
 <br>
 
