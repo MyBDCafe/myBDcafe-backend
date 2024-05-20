@@ -116,13 +116,32 @@ public class EventService {
 		
 	}
 	
+	//영업시간 등록
+	public void registerHours(CafeEvent event, List<HoursDto> hoursDto) {
+		
+		if(hoursDto == null) {
+			return;
+		}
+		
+		for(HoursDto hour : hoursDto) {
+			BusinessHours businessHour = BusinessHours.builder()
+					.cafeEvent(event)
+					.Day(hour.getDay())
+					.openTime(hour.getOpenTime())
+					.closeTime(hour.getCloseTime())
+					.build();
+			bRepo.save(businessHour);
+		}
+		
+	}
+	
 	//이벤트 등록
 	public void registerEvent(EventDto eventDto) {
 		
 		Charactor charactor = findCharactor(eventDto.getGenre(), eventDto.getMainCharacter());
 		Location location = findLocation(eventDto.getLocation());
 		
-		List<HoursDto> hoursDto = eventDto.getBusinessHours();
+//		List<HoursDto> hoursDto = eventDto.getBusinessHours();
 		
 		CafeEvent event = CafeEvent.builder()
 				.eventName(eventDto.getEventName())
@@ -136,15 +155,7 @@ public class EventService {
 		
 		eRepo.save(event);
 		
-		for(HoursDto hour : hoursDto) {
-			BusinessHours businessHour = BusinessHours.builder()
-					.cafeEvent(event)
-					.Day(hour.getDay())
-					.openTime(hour.getOpenTime())
-					.closeTime(hour.getCloseTime())
-					.build();
-			bRepo.save(businessHour);
-		}
+		registerHours(event, eventDto.getBusinessHours());
 		
 	}
 
@@ -216,6 +227,26 @@ public class EventService {
 			    return location;
 				
 			}	
+	
+	//영업시간 수정
+	public void updatehoursDto(CafeEvent event, List<UpdateHoursDto> hoursDto) {
+		
+		if(hoursDto == null) {
+			return;
+		}
+		
+		for(UpdateHoursDto hour : hoursDto) {
+			BusinessHours businessHour = BusinessHours.builder()
+					.cafeEvent(event)
+					.id(hour.getHourId())
+					.Day(hour.getDay())
+					.openTime(hour.getOpenTime())
+					.closeTime(hour.getCloseTime())
+					.build();
+			bRepo.save(businessHour);
+		}
+		
+	}
 
 	//이벤트 수정
 	public void updateEvent(UpdateEventDto eventDto) {
@@ -236,17 +267,7 @@ public class EventService {
 				.build();
 		
 		eRepo.save(event);
-		
-		for(UpdateHoursDto hour : hoursDto) {
-			BusinessHours businessHour = BusinessHours.builder()
-					.cafeEvent(event)
-					.id(hour.getHourId())
-					.Day(hour.getDay())
-					.openTime(hour.getOpenTime())
-					.closeTime(hour.getCloseTime())
-					.build();
-			bRepo.save(businessHour);
-		}
+
 	}
 	
 	//이벤트 삭제
